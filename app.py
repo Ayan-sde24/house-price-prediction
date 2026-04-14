@@ -3,13 +3,15 @@ from flask_cors import CORS
 import utils
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# Load model & artifacts once at startup
+# Load model ONCE at startup
+print("Loading model artifacts...")
 utils.load_saved_artifacts()
+print("Model loaded successfully")
 
 
-# Root route (FIXES your error)
+# Root route (fixes "Not Found")
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({
@@ -21,7 +23,7 @@ def home():
     })
 
 
-# Get all locations
+# Get locations
 @app.route('/get_locations', methods=['GET'])
 def get_locations():
     try:
@@ -55,14 +57,12 @@ def predict_price():
         )
 
         return jsonify({
-            'price': round(estimated_price, 2)
+            'price': estimated_price
         })
 
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
 
-# Run server
 if __name__ == "__main__":
-    print("Starting Python Flask Server For Home Price Prediction...")
     app.run(host="0.0.0.0", port=10000)
