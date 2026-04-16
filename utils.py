@@ -1,5 +1,4 @@
 import json
-import json
 import pickle
 import numpy as np
 import os
@@ -29,7 +28,7 @@ def load_saved_artifacts():
     global __model
 
     # Use the model dir path relative to backend
-    model_dir = os.path.join(os.path.dirname(__file__), '..', 'model')
+    model_dir = os.path.join(os.path.dirname(__file__), 'model')
     features_path = os.path.join(model_dir, 'features.json')
     model_path = os.path.join(model_dir, 'bangalore_model.pkl')
 
